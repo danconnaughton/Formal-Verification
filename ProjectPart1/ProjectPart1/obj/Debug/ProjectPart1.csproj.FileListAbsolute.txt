@@ -10,3 +10,6 @@ C:\Users\Dan\Desktop\College\Fourth Year\Formal Verification\Formal-Verification
 C:\Users\Dan\Desktop\College\Fourth Year\Formal Verification\Formal-Verification\ProjectPart1\ProjectPart1\bin\Debug\ProjectPart1.exe
 C:\Users\Dan\Desktop\College\Fourth Year\Formal Verification\Formal-Verification\ProjectPart1\ProjectPart1\bin\Debug\ProjectPart1.pdb
 C:\Users\Dan\Desktop\College\Fourth Year\Formal Verification\Formal-Verification\ProjectPart1\ProjectPart1\obj\Debug\ProjectPart1.csprojResolveAssemblyReference.cache
+C:\Users\simon\Documents\Formal-Verification\ProjectPart1\ProjectPart1\bin\Debug\ProjectPart1.exe.config
+C:\Users\simon\Documents\Formal-Verification\ProjectPart1\ProjectPart1\obj\Debug\ProjectPart1.exe
+C:\Users\simon\Documents\Formal-Verification\ProjectPart1\ProjectPart1\obj\Debug\ProjectPart1.pdb
