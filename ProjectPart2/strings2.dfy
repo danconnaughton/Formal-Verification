@@ -5,7 +5,7 @@ predicate isPrefixPred(pre:string, str:string)
 
 predicate isNotPrefixPred(pre:string, str:string)
 {
- forall i :: 0 < i <= |pre| ==> pre != str[..|i|]
+    (|pre| > |str|) || (pre != str[..|pre|]) 
 }
 
 // Sanity check: Dafny should be able to automatically prove the following lemma
@@ -17,12 +17,12 @@ lemma PrefixNegationLemma(pre:string, str:string)
 
 predicate isSubstringPred(sub:string, str:string)
 {
- exists i :: 0 < i <= |str| - |sub| ==> isPrefixPred(sub,str[i..]) == true 
+ exists i :: 0 < i <= |str| - |sub| ==> isPrefixPred(sub,str[i..])
 }
 
 predicate isNotSubstringPred(sub:string, str:string)
 {
- forall i :: 0 < i <= |str| ==> isSubstringPred(sub,str) == false
+ forall i :: !(0 < i <= |str| - |sub| ==> isPrefixPred(sub,str[i..]))
 }
 
 // Sanity check: Dafny should be able to automatically prove the following lemma
@@ -34,12 +34,12 @@ lemma SubstringNegationLemma(sub:string, str:string)
 
 predicate haveCommonKSubstringPred(k:nat, str1:string, str2:string)
 {
-  //TODO
+    exists i :: |i| == k ==> (isSubstringPred(i, str1) && isSubstringPred(i, str2))
 }
 
 predicate haveNotCommonKSubstringPred(k:nat, str1:string, str2:string)
 {
-	//TODO: your FOL formula should start with a forall
+	forall i :: !(|i| == k ==> (isSubstringPred(i, str1) && isSubstringPred(i, str2)))
 }
 
 // Sanity check: Dafny should be able to automatically prove the following lemma
