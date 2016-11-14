@@ -17,12 +17,12 @@ lemma PrefixNegationLemma(pre:string, str:string)
 
 predicate isSubstringPred(sub:string, str:string)
 {
- exists i :: 0 < i <= |str| - |sub| ==> isPrefixPred(sub,str[i..])
+ exists i :: 0 < i <= |str| - |sub| && isPrefixPred(sub,str[i..])
 }
 
 predicate isNotSubstringPred(sub:string, str:string)
 {
- forall i :: !(0 < i <= |str| - |sub| ==> isPrefixPred(sub,str[i..]))
+ forall i :: 0 < i <= |str| - |sub| ==> isNotPrefixPred(sub,str[i..])
 }
 
 // Sanity check: Dafny should be able to automatically prove the following lemma
