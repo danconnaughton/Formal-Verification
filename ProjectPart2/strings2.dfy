@@ -5,7 +5,7 @@ predicate isPrefixPred(pre:string, str:string)
 
 predicate isNotPrefixPred(pre:string, str:string)
 {
-    (|pre| > |str|) || (pre != str[..|pre|]) 
+ (!(|pre| <= |str|) || ((|pre| <= |str|) ==> !(pre == str[..|pre|])))
 }
 
 // Sanity check: Dafny should be able to automatically prove the following lemma
@@ -47,4 +47,3 @@ lemma commonKSubstringLemma(k:nat, str1:string, str2:string)
 	ensures  haveCommonKSubstringPred(k,str1,str2) <==> !haveNotCommonKSubstringPred(k,str1,str2)
 	ensures !haveCommonKSubstringPred(k,str1,str2) <==> haveNotCommonKSubstringPred(k,str1,str2)
 {}
-

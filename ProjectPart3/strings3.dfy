@@ -16,24 +16,30 @@ lemma PrefixNegationLemma(pre:string, str:string)
 {}
 
 method isPrefix(pre: string, str: string) returns (res:bool)
-	ensures !res <==> isNotPrefixPred(pre,str)
+	//ensures !res <==> isNotPrefixPred(pre,str)
 	ensures  res <==> isPrefixPred(pre,str)
 {
-  var i := 0;
- if |pre| > |str|
- {
-	return false;
- } 
- while i < |str| && i < |pre|
- invariant i >= 0; 
- {
-  if pre[i] != str[i]
-  {
-    return false;
-  }
-  i := i + 1; 
- } 
- return true;
+ 
+ if |pre| > |str| { return false; }
+ 
+ var i := 0;
+ res := true;
+
+ while(i < |pre| && res )
+	decreases |str| - i + (if res then 1 else 0)
+	invariant 0 <= i <= |pre|;
+	invariant res ==> isPrefixPred(pre[..i],str) 
+	invariant !res ==> !isPrefixPred(pre,str)
+	{
+		if pre[i] != str[i]
+		{
+			res := false;
+		}
+		else
+		{
+			i := i + 1;
+		} 
+	}	 
 }
 predicate isSubstringPred(sub:string, str:string)
 {
