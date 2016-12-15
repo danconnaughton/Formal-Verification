@@ -16,7 +16,7 @@ lemma PrefixNegationLemma(pre:string, str:string)
 {}
 
 method isPrefix(pre: string, str: string) returns (res:bool)
-	//ensures !res <==> isNotPrefixPred(pre,str)
+	ensures !res <==> isNotPrefixPred(pre,str)
 	ensures  res <==> isPrefixPred(pre,str)
 {
  
@@ -26,7 +26,7 @@ method isPrefix(pre: string, str: string) returns (res:bool)
  res := true;
 
  while(i < |pre| && res )
-	decreases |str| - i + (if res then 1 else 0)
+	decreases |pre| - i + (if res then 1 else 0)
 	invariant 0 <= i <= |pre|;
 	invariant res ==> isPrefixPred(pre[..i],str) 
 	invariant !res ==> !isPrefixPred(pre,str)
@@ -60,14 +60,19 @@ method isSubstring(sub: string, str: string) returns (res:bool)
 	ensures  res <==> isSubstringPred(sub, str)
 	//ensures !res <==> isNotSubstringPred(sub, str) // This postcondition follows from the above lemma.
 {
+  if(|sub|>|str|){return false;}
   var i := 0;
- while i < |str|
+  res := false;
+ while i+|sub| < |str| && !res
+ decreases |str| - i + (if res then 0 else 1)
+ invariant 0 <= (i+|sub|) <= |str|
+ invariant res ==> isSubstringPred(sub, str)
+ invariant !res ==> !isSubstringPred(sub, str[..|sub|+i])
  {
   var isSub := isPrefix(sub,str[i..]);
-  if isSub == true { return true; }
+  if isSub == true { res:= true; }
   else { i := i + 1; } 
  }
- return false;
 }
 
 
