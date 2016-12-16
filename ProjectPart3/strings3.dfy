@@ -60,18 +60,26 @@ method isSubstring(sub: string, str: string) returns (res:bool)
 	ensures  res <==> isSubstringPred(sub, str)
 	//ensures !res <==> isNotSubstringPred(sub, str) // This postcondition follows from the above lemma.
 {
-  if(|sub|>|str|){return false;}
+  if(|sub| > |str|) { return false; }
+
   var i := 0;
   res := false;
- while i+|sub| < |str| && !res
- decreases |str| - i + (if res then 0 else 1)
- invariant 0 <= (i+|sub|) <= |str|
- invariant res ==> isSubstringPred(sub, str)
- invariant !res ==> !isSubstringPred(sub, str[..|sub|+i])
- {
-  var isSub := isPrefix(sub,str[i..]);
-  if isSub == true { res:= true; }
-  else { i := i + 1; } 
+
+ while (|sub| < |str| && res)
+	decreases |str| - i + (if res then 1 else 0)
+	invariant res ==> isSubstringPred(sub,str) 
+	invariant 0 <= i <= (|str| - |sub|)
+	invariant res ==> isSubstringPred(sub,str[i..])
+	{
+		var isSub := isPrefix(sub,str[i..]);
+		if (isSub == true)
+		{ 
+			res:= true; 
+		}
+		else 
+		{ 
+			i := i + 1; 
+		} 
  }
 }
 
