@@ -65,11 +65,11 @@ method isSubstring(sub: string, str: string) returns (res:bool)
   var i := 0;
   res := false;
 
- while (|sub| < |str| && res)
-	decreases |str| - i + (if res then 1 else 0)
-	invariant res ==> isSubstringPred(sub,str) 
+ while ((i < (|str| - |sub|)) && !res)
+	decreases |str| - i + (if res then 0 else 1)
 	invariant 0 <= i <= (|str| - |sub|)
-	invariant res ==> isSubstringPred(sub,str[i..])
+	invariant res ==> isSubstringPred(sub,str) 
+	//invariant !res ==> !isSubstringPred(sub,str[i..])
 	{
 		var isSub := isPrefix(sub,str[i..]);
 		if (isSub == true)
